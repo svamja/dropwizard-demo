@@ -1,11 +1,12 @@
 package com.example.pagination.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
     
     public int id;
-    public int user_id;
+    public int userid;
     public double total;
     public List<OrderItem> items;
 
@@ -13,15 +14,34 @@ public class Order {
 
     }
 
-    public Order(int id, int user_id, List<OrderItem> items) {
+    public Order(int id, int userid, List<OrderItem> items) {
         this.id = id;
-        this.user_id = user_id;
+        this.userid = userid;
         this.items = items;
         this.addUp();
     }
 
+    public Order(int id, int userid) {
+        this.id = id;
+        this.userid = userid;
+        this.items = new ArrayList<OrderItem>();
+        this.addUp();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 
     public void setItems(List<OrderItem> items) {

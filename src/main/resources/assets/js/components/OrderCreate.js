@@ -8,6 +8,10 @@ class OrderCreate extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.addItem();
+    }
+
     getUpdater(field) {
         return (event) => {
             this.setState({ [field]: event.target.value });
@@ -21,6 +25,7 @@ class OrderCreate extends React.Component {
                 if(item.id == id) {
                     item[field] = event.target.value;
                     this.setState({ items });
+                    break;
                 }
             }
         }
@@ -39,7 +44,8 @@ class OrderCreate extends React.Component {
         console.log(response);
     }
 
-    onAddItem(event) {
+    addItem(event) {
+        event && event.preventDefault();
         let id = 1;
         if(this.state.items.length) {
             id = this.state.items[this.state.items.length - 1].id + 1;
@@ -52,12 +58,18 @@ class OrderCreate extends React.Component {
     render() {
 
         let createOrder = this.createOrder.bind(this);
-        let onAddItem = this.onAddItem.bind(this);
+        let addItem = this.addItem.bind(this);
         let item_elements = this.state.items.map(item => (
-            <div key={item.id}>
-                <div>Item# {item.id}</div>
-                <div>
-                    <input type="text" value={item.name} onChange={this.getItemUpdater(item.id, 'name')} />
+            <div key={item.id} className="row">
+                <div className="col">{item.id}</div>
+                <div className="col">
+                    <input class="form-control" type="text" value={item.name} onChange={this.getItemUpdater(item.id, 'name')} />
+                </div>
+                <div className="col">
+                    <input class="form-control" type="number" value={item.quantity} onChange={this.getItemUpdater(item.id, 'quantity')} />
+                </div>
+                <div className="col">
+                    <input class="form-control" type="number" value={item.rate} onChange={this.getItemUpdater(item.id, 'rate')} />
                 </div>
             </div>
         ));
@@ -65,17 +77,19 @@ class OrderCreate extends React.Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col">
-                        Order #
-                    </div>
-                    <div className="col">
-                        <input type="number" value={this.state.id} onChange={this.getUpdater('id')} />
-                    </div>
+                    <div className="col"> Order # </div>
+                    <div className="col"> (New Order) </div>
                 </div>
                 <div className="row my-2">
                     <div className="col">
-                        <button className="btn btn-primary" onClick={onAddItem}>Add Item</button>
+                        <a href="#" onClick={addItem}>Add Item</a>
                     </div>
+                </div>
+                <div className="row">
+                    <div className="col">#</div>
+                    <div className="col"> Name </div>
+                    <div className="col"> Quantity </div>
+                    <div className="col"> Rate </div>
                 </div>
                 {item_elements}
                 <div className="row my-2">
