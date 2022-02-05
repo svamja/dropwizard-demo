@@ -9,12 +9,20 @@ public class Order {
     public double total;
     public List<OrderItem> order_items;
 
+    public Order() {
+
+    }
+
     public Order(int id, int user_id, List<OrderItem> order_items) {
     // public Order(int id, int user_id) {
         this.id = id;
         this.user_id = user_id;
         this.order_items = order_items;
         this.addUp();
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void addUp() {
