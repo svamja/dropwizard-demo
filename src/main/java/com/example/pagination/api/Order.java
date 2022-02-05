@@ -7,17 +7,16 @@ public class Order {
     public int id;
     public int user_id;
     public double total;
-    public List<OrderItem> order_items;
+    public List<OrderItem> items;
 
     public Order() {
 
     }
 
-    public Order(int id, int user_id, List<OrderItem> order_items) {
-    // public Order(int id, int user_id) {
+    public Order(int id, int user_id, List<OrderItem> items) {
         this.id = id;
         this.user_id = user_id;
-        this.order_items = order_items;
+        this.items = items;
         this.addUp();
     }
 
@@ -25,9 +24,13 @@ public class Order {
         this.id = id;
     }
 
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+    }
+
     public void addUp() {
         double total = 0;
-        for(OrderItem item: order_items) {
+        for(OrderItem item: items) {
             total += item.quantity * item.rate;
         }
         this.total = total;

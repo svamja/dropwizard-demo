@@ -6,6 +6,14 @@ class Order extends React.Component {
 
     render() {
         const { order } = this.props;
+        let order_items = [];
+
+        if(order.items) {
+            order_items = order.items.map(item => (
+                <div> {item.name} </div>
+            ));
+        }
+
         return (
             <div>
                 <div className="row">
@@ -16,6 +24,7 @@ class Order extends React.Component {
                         {order.datePretty}
                     </div>
                 </div>
+                {order_items}
                 <div className="row">
                     <div className="col">
                         Total ${order.total}
