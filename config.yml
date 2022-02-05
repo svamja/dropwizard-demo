@@ -1,0 +1,9 @@
+logging:
+  level: INFO
+  loggers:
+    com.example: DEBUG
+
+server:
+  type: simple
+  rootPath: /api/
+  applicationContextPath: /
