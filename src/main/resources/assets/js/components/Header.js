@@ -27,7 +27,9 @@ class Header extends React.Component {
             
                 <ul className="nav nav-pills">
                     {header_links}
-                    <li className="nav-item"><a href="#" className="nav-link">Help</a></li>
+                    <li className="nav-item">
+                        <a href="https://github.com/svamja/dropwizard-demo" className="nav-link">Github</a>
+                        </li>
                 </ul>
             </header>
         );
