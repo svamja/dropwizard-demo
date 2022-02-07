@@ -11,7 +11,10 @@ import java.util.Collections;
 import java.util.List;
 
 import com.example.pagination.api.Order;
+import com.example.pagination.cli.DropCommand;
+import com.example.pagination.cli.TotalCommand;
 import com.example.pagination.db.OrderDao;
+import com.example.pagination.db.OrderItemDao;
 import com.example.pagination.resources.OrderResource;
 
 import org.jdbi.v3.core.Jdbi;
@@ -21,14 +24,8 @@ public class PaginationDemoApplication extends Application<PaginationDemoConfigu
 
     private static List<Order> orders;
 
-    static {
-        orders = Collections.synchronizedList(new ArrayList<Order>());
-        orders.add(new Order(1));
-        orders.add(new Order(2));
-    }
-
     public static void main(final String[] args) throws Exception {
-        if(args.length < 2) {
+        if(args.length == 0) {
             new PaginationDemoApplication().run(new String[]{ "server", "config.yml" });
         }
         else {
@@ -43,6 +40,8 @@ public class PaginationDemoApplication extends Application<PaginationDemoConfigu
 
     @Override
     public void initialize(final Bootstrap<PaginationDemoConfiguration> bootstrap) {
+        bootstrap.addCommand(new TotalCommand(this));
+        bootstrap.addCommand(new DropCommand(this));
         bootstrap.addBundle(new AssetsBundle("/assets", "/", "index.html"));
     }
 
@@ -55,26 +54,28 @@ public class PaginationDemoApplication extends Application<PaginationDemoConfigu
         final JdbiFactory factory = new JdbiFactory();
         final Jdbi jdbi = factory.build(environment, config.getDataSourceFactory(), "database");
         
-        // Create DAO Instance
+        // Create DAO Instances
         OrderDao orderDao = jdbi.onDemand(OrderDao.class);
+        OrderItemDao orderItemDao = jdbi.onDemand(OrderItemDao.class);
 
-        // Initialize Table
-        orderDao.createOrderTable();
+        // Initialize Tables
+        orderDao.createTable();
+        orderItemDao.createTable();
 
-        // Seed Test Data
-        seedOrders(orderDao);
+        // // Seed Test Data
+        // seedOrders(orderDao);
 
         // Create REST Resource
-        OrderResource orderResource = new OrderResource(orderDao);
+        OrderResource orderResource = new OrderResource(orderDao, orderItemDao);
 
         // Register REST Resource with Jersey
         environment.jersey().register(orderResource);
     }
 
-    private void seedOrders(OrderDao orderDao) {
-        for (Order order : orders) {
-            orderDao.insert(order.userid);
-        }
-    }
+    // private void seedOrders(OrderDao orderDao) {
+    //     for (Order order : orders) {
+    //         orderDao.insert(order.userid);
+    //     }
+    // }
 
 }

@@ -1,6 +1,6 @@
 
   ReactDOM.render(
-    <OrderIndex />,
+    <Home />,
     document.getElementById('root')
   );
   

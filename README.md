@@ -1,4 +1,4 @@
-# Dropwizard Demo with Pagination, jOOQ, ReactJS
+# Dropwizard Demo (JDBI 3, ReactJS, Master-Detail)
 
 ## Getting Started
 
@@ -12,11 +12,10 @@ After cloning..
 
 * ReactJS is used for the front-end
 * Complete ReactJS source is served using assets bundler from resources/assets folder
-
-TBD -
-* Database is Postgresql
-* Database access layer is written using jOOQ
-* Dropwizard Command is used to write a backend task to perform aggregation
+* Database is any configurable RDBMS (tested with MySQL)
+* Database access layer is written using JDBI 3
+* Master-detail (or Primary Foreign key) relation is explored using `Order` and `OrderItem` entities.
+* Dropwizard Command is used to demonstrate a backend task to perform aggregation.
 * The task "update_readme" uses MarkdownPapers to convert this `readme.md` to `index.html`, which is served as the landing page of this application.
 
 ## References
@@ -32,14 +31,14 @@ Command used to create this project
         -DarchetypeArtifactId=java-simple \
         -DinteractiveMode=false
 
-Dropwizard References
+**Dropwizard References**
 
 https://www.dropwizard.io/en/latest/
 
 https://spin.atomicobject.com/2014/10/11/serving-static-assets-with-dropwizard/
 
 
-React References
+**React References**
 
 https://reactjs.org/docs/add-react-to-a-website.html
 

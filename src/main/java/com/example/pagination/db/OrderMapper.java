@@ -12,7 +12,7 @@ public class OrderMapper implements RowMapper<Order>{
 
   @Override
   public Order map(ResultSet rs, StatementContext ctx) throws SQLException {
-    return new Order(rs.getInt("id"), rs.getInt("userid"));
+    return new Order(rs.getInt("id"), rs.getInt("userid"), rs.getDouble("total"), rs.getTimestamp("created") );
   }
 
 }

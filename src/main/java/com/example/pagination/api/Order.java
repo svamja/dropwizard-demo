@@ -1,35 +1,27 @@
 package com.example.pagination.api;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Order {
     
     public int id;
     public int userid;
-    // public double total;
-    // public List<OrderItem> items;
+    public double total;
+    public Date created;
+    public List<OrderItem> items;
 
     public Order() {
 
     }
 
-    public Order(int userid) {
-        this.userid = userid;
-    }
-
-    // public Order(int id, int userid, List<OrderItem> items) {
-    //     this.id = id;
-    //     this.userid = userid;
-    //     this.items = items;
-    //     this.addUp();
-    // }
-
-    public Order(int id, int userid) {
+    public Order(int id, int userid, double total, Date created) {
         this.id = id;
         this.userid = userid;
-        // this.items = new ArrayList<OrderItem>();
-        // this.addUp();
+        this.total = total;
+        this.created = created;
+        this.items = new ArrayList<OrderItem>();
     }
 
     public int getId() {
@@ -40,6 +32,18 @@ public class Order {
         return userid;
     }
 
+    public double getTotal() {
+        return total;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -48,16 +52,25 @@ public class Order {
         this.userid = userid;
     }
 
-    // public void setItems(List<OrderItem> items) {
-    //     this.items = items;
-    // }
+    public void setTotal(double total) {
+        this.total = total;
+    }
 
-    // public void addUp() {
-    //     double total = 0;
-    //     for(OrderItem item: items) {
-    //         total += item.quantity * item.rate;
-    //     }
-    //     this.total = total;
-    // }
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+        this.addUp();
+    }
+
+    public void addUp() {
+        double total = 0;
+        for(OrderItem item: items) {
+            total += item.quantity * item.rate;
+        }
+        this.total = total;
+    }
 
 }

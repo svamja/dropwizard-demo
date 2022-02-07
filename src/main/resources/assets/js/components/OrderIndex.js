@@ -4,13 +4,7 @@ class OrderIndex extends React.Component {
         super(props);
         this.state = {
           orders: [],
-          current_page: 'Orders',
-          input_order: {}
         };
-    }
-
-    onPageChange(page) {
-      this.setState({ current_page: page });
     }
 
     async componentDidMount() {
@@ -19,25 +13,41 @@ class OrderIndex extends React.Component {
         this.setState({ orders });
     }
 
+    async paginate(event, page) {
+        event && event.preventDefault();
+        page = page || 0;
+        let url = "/api/orders?page=" + page;
+        let res = await fetch(url);
+        let orders = await res.json();
+        this.setState({ orders });
+    }
+
     render() {
 
         const { orders, current_page, input_order } = this.state;
-        let active_component;
-        if(current_page == 'Orders') {
-            let order_list = orders.map(order => <Order key={order.id} order={order} />);
-            active_component = order_list;
-        }
-        else if(current_page == 'Create Order') {
-            active_component = <OrderCreate />
-        }
+        const paginate = this.paginate.bind(this);
+        let order_list = orders.map(order => <Order key={order.id} order={order} />);
 
         return (
             <div className="container">
-                <Header onPageChange={(page) => this.onPageChange(page)} />
-                <div className="row">
-                    <h3 className="bg-light py-2">{current_page}</h3>
+                <div className="row justify-content-end">
+                    <div className="col-auto">
+
+                        <ul className="pagination">
+                            <li className="page-item">
+                                <a className="page-link" href="#" onClick={(event) => paginate(event, 0)}>1</a>
+                            </li>
+                            <li className="page-item">
+                            <a className="page-link" href="#" onClick={(event) => paginate(event, 1)}>2</a>
+                            </li>
+                            <li className="page-item">
+                            <a className="page-link" href="#" onClick={(event) => paginate(event, 2)}>3</a>
+                            </li>
+                        </ul>
+
+                    </div>
                 </div>
-                {active_component}
+                {order_list}
             </div>
         );
     }
