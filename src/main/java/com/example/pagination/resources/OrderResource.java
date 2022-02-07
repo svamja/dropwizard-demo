@@ -7,7 +7,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import com.example.pagination.api.Order;
-import com.example.pagination.api.OrderItem;
+// import com.example.pagination.api.OrderItem;
 import com.example.pagination.db.OrderDao;
 
 import org.jdbi.v3.core.Jdbi;
@@ -46,9 +46,9 @@ public class OrderResource {
     }
 
     @POST
-    public void createOrder(Order order) {
+    public void createOrder(int userid) {
         // this.orders.add(order);
-        this.orderDao.insert(order);
+        this.orderDao.insert(userid);
     }
 
 }

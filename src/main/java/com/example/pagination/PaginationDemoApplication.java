@@ -23,8 +23,8 @@ public class PaginationDemoApplication extends Application<PaginationDemoConfigu
 
     static {
         orders = Collections.synchronizedList(new ArrayList<Order>());
-        orders.add(new Order(1, 1));
-        orders.add(new Order(2, 2));
+        orders.add(new Order(1));
+        orders.add(new Order(2));
     }
 
     public static void main(final String[] args) throws Exception {
@@ -73,7 +73,7 @@ public class PaginationDemoApplication extends Application<PaginationDemoConfigu
 
     private void seedOrders(OrderDao orderDao) {
         for (Order order : orders) {
-            orderDao.insert(order);
+            orderDao.insert(order.userid);
         }
     }
 
