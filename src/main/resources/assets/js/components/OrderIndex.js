@@ -3,7 +3,8 @@ class OrderIndex extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          orders: [],
+            page: 0,
+            orders: [],
         };
     }
 
@@ -14,6 +15,7 @@ class OrderIndex extends React.Component {
     }
 
     async paginate(event, page) {
+        this.setState({ page });
         event && event.preventDefault();
         page = page || 0;
         let url = "/api/orders?page=" + page;
@@ -22,11 +24,21 @@ class OrderIndex extends React.Component {
         this.setState({ orders });
     }
 
+    async onDelete(id) {
+        let url = '/api/orders/' + id;
+        let headers = {
+            'Content-Type': 'application/json'
+        };
+        let method = 'DELETE';
+        const response = await fetch(url, { headers, method });
+        await this.paginate(null, this.state.page);
+    }
+
     render() {
 
         const { orders, current_page, input_order } = this.state;
         const paginate = this.paginate.bind(this);
-        let order_list = orders.map(order => <Order key={order.id} order={order} />);
+        let order_list = orders.map(order => <Order key={order.id} order={order} onDelete={() => this.onDelete(order.id)} />);
 
         return (
             <div className="container">

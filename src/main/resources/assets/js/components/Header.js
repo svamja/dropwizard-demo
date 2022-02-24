@@ -2,16 +2,14 @@ class Header extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { current_page: 'Orders' }
     }
 
     onClick(page) {
-        this.setState({ current_page: page });
         this.props.onPageChange(page);
     }
 
     render() {
-        const { current_page } = this.state;
+        const current_page = this.props.currentPage;
 
         const pages = [ 'Orders', 'Create Order' ];
 

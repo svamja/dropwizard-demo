@@ -32,7 +32,7 @@ class OrderCreate extends React.Component {
     }
 
     async createOrder() {
-        const { onCreate } = this.props;
+        const { backToOrders } = this.props;
         let order = { user_id: this.state.user_id, items: this.state.items };
         let url = '/api/orders';
         let headers = {
@@ -41,7 +41,12 @@ class OrderCreate extends React.Component {
         let method = 'POST';
         let body = JSON.stringify(order);
         const response = await fetch(url, { headers, method, body });
-        onCreate();
+        backToOrders();
+    }
+
+    async cancel() {
+        const { backToOrders } = this.props;
+        backToOrders();
     }
 
     addItem(event) {
@@ -58,10 +63,11 @@ class OrderCreate extends React.Component {
     render() {
 
         let createOrder = this.createOrder.bind(this);
+        let cancel = this.cancel.bind(this);
         let addItem = this.addItem.bind(this);
         let { user_id } = this.state;
         let item_elements = this.state.items.map(item => (
-            <div key={item.id} className="row">
+            <div key={item.id} className="row mt-2">
                 <div className="col">{item.id}</div>
                 <div className="col">
                     <input className="form-control" type="text" value={item.name} onChange={this.getItemUpdater(item.id, 'name')} />
@@ -78,30 +84,24 @@ class OrderCreate extends React.Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col"> Order # </div>
-                    <div className="col"> (New Order) </div>
-                </div>
-                {/* <div className="row">
-                    <div className="col"> User # </div>
-                    <div className="col">
-                    <input className="form-control" type="number" value={user_id} onChange={this.getUpdater('user_id')} />
-                    </div>
-                </div> */}
-                <div className="row my-2">
-                    <div className="col">
-                        <a href="#" onClick={addItem}>Add Item</a>
-                    </div>
-                </div>
-                <div className="row">
                     <div className="col">#</div>
-                    <div className="col"> Name </div>
+                    <div className="col"> Item </div>
                     <div className="col"> Quantity </div>
                     <div className="col"> Rate </div>
                 </div>
                 {item_elements}
                 <div className="row my-2">
                     <div className="col">
+                        <a href="#" onClick={addItem}>Add Item</a>
+                    </div>
+                </div>
+                <div className="row mt-3">
+                    <div className="col">
                         <button onClick={createOrder} className="btn btn-primary">Create</button>
+                        &nbsp; &nbsp;
+                        <a href="#" 
+                            onClick={() => this.props.backToOrders('Orders')}
+                        >Cancel</a>
                     </div>
                 </div>
             </div>

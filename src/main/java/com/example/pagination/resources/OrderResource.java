@@ -41,8 +41,8 @@ public class OrderResource {
         // return this.orders;
         Integer pageValue = page.orElse(0);
         int limit = 5;
-        int skip = pageValue*limit;
-        List<Order> orders = this.orderDao.getPage(skip, limit);
+        int offset = pageValue*limit;
+        List<Order> orders = this.orderDao.getPage(offset, limit);
         for(Order order: orders) {
             order.setItems(this.orderItemDao.byOrderId(order.id));
         }
@@ -75,6 +75,12 @@ public class OrderResource {
             // this.orderItemDao.insert(item);
             this.orderItemDao.insert(item.order_id, item.name, item.quantity, item.rate);
         }
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void deleteOrder(@PathParam("id") int id) {
+        this.orderDao.deleteById(id);
     }
 
 }

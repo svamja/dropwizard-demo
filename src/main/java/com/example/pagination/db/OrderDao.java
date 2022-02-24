@@ -29,11 +29,11 @@ public interface OrderDao {
     @SqlQuery("select * from orders")
     List<Order> getAll();
 
-    @SqlQuery("select * from orders limit :limit offset :skip")
-    List<Order> getPage(@Bind("skip") int skip, @Bind("limit") int limit);
+    @SqlQuery("select * from orders limit :limit offset :offset")
+    List<Order> getPage(@Bind("offset") int offset, @Bind("limit") int limit);
 
     @SqlUpdate("delete from orders where id = :id")
-    void deleteById(@Bind int id);
+    void deleteById(@Bind("id") int id);
 
     @SqlQuery("select last_insert_id();")
     public int lastInsertId();

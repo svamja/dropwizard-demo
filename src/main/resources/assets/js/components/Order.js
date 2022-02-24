@@ -45,13 +45,23 @@ class Order extends React.Component {
                             </thead>
                             <tbody>
                                 {order_items}
+                                <tr>
+                                    <th> Total </th>
+                                    <th> </th>
+                                    <th> ${order.total} </th>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div className="row mt-2">
-                    <div className="col">
+                <div className="col">
                         Total ${order.total}
+                    </div>
+                    <div className="col text-end">
+                        <a href="#" onClick={this.props.onDelete}>
+                            <i className="fa fa-trash text-danger"></i>
+                        </a>
                     </div>
                 </div>
             </div>

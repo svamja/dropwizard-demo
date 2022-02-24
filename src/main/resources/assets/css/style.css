@@ -1,4 +1,15 @@
 .bg-tertiary {
-    background-color: #ace8fe;
-    border-radius: 0.5em;
+    background-color: #fdffd9;
+    /* border-radius: 0.5em; */
+}
+
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background: rgb(251,244,228);
+    background: linear-gradient(0deg, rgba(251,244,228,1) 0%, rgba(237,255,255,1) 100%);
+
+}
+
+.container {
+    min-height: 100vh;
 }
